@@ -30,13 +30,15 @@ exports.get = async (req, res) => {
 
 exports.update = async (req, res) => {
     const { itemId } = req.params;
-    const { name, type, price, stock } = req.body;
-    const updateData = {
-        name,
-        type,
-        price,
-        stock
-    }
+    const { name, type, price, stock, actualPrice } = req.body;
+    const updateData = {};
+
+    if(name) updateData.name = name;
+    if(type) updateData.type = type;
+    if(price) updateData.price = price;
+    if(stock) updateData.stock = stock;
+    if(actualPrice !== null) updateData.actualPrice = actualPrice;
+
     const result = await itemService.updateItem(itemId, updateData);
     if(!result.success){
         return res.status(result.status).send(result.message);

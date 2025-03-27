@@ -8,6 +8,7 @@ exports.createItem = async (image, name, type, price, stock) => {
         type,
         price,
         stock,
+        actualPrice: true
     }
     const item = await itemRepository.create(itemData);
     return Result(true, 200, 'Item created with success', item)
@@ -35,15 +36,7 @@ exports.updateItem = async (id, itemNewData) => {
         return Result(false, 404, 'Item not found');
     }
 
-    const itemData = {};
-    for(const item in itemNewData){
-        const value = itemNewData[item];
-        if(value){
-            itemData[item] = value;
-        }
-    }
-
-    const updatedItem = await itemRepository.update(id, itemData);
+    const updatedItem = await itemRepository.update(id, itemNewData);
     if(!updatedItem) {
         return Result(false, 404, 'Item not found');
     }

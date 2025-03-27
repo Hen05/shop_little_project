@@ -16,10 +16,13 @@ const itemRoutes = require('./src/routes/itemRoutes.js');
 const saleRoutes = require('./src/routes/saleRoutes.js');
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: (origin, callback) => {
+        callback(null, true);
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
 }));
+
 
 app.use(cookieParser());
 app.use(express.json());
